@@ -148,6 +148,34 @@ static void swap_close_elements(LinkedList *list, Element *element1,
   }
 }
 
+static void swap_far_elements(LinkedList *list, Element *element1,
+                              Element *element2) {
+  Element *previous2 = NULL, *next2 = NULL;
+
+  previous2 = element2->previous;
+  next2 = element2->next;
+
+  if (element2->previous != NULL) {
+    element2->previous->next = element1;
+  }
+  if (element2->next != NULL) {
+    element2->next->previous = element1;
+  }
+
+  element2->previous = element1->previous;
+  element2->next = element1->next;
+
+  if (element1->previous != NULL) {
+    element1->previous->next = element2;
+  }
+  if (element1->next != NULL) {
+    element1->next->previous = element2;
+  }
+
+  element1->previous = previous2;
+  element1->next = next2;
+}
+
 void doubly_linked_list_swap(LinkedList *list, Element *element1,
                              Element *element2) {
   if (element1 == element2 || element1 == NULL || element2 == NULL)
@@ -165,37 +193,12 @@ void doubly_linked_list_swap(LinkedList *list, Element *element1,
     list->tail = element1;
   }
 
-  Element *previous2 = NULL, *next2 = NULL;
-
-  if (element2 != NULL) {
-    previous2 = element2->previous;
-    next2 = element2->next;
-  }
-
   if (element1->next == element2) {
     swap_close_elements(list, element1, element2);
   } else if (element2->next == element1) {
     swap_close_elements(list, element2, element1);
   } else {
-    if (element2->previous != NULL) {
-      element2->previous->next = element1;
-    }
-    if (element2->next != NULL) {
-      element2->next->previous = element1;
-    }
-
-    element2->previous = element1->previous;
-    element2->next = element1->next;
-
-    if (element1->previous != NULL) {
-      element1->previous->next = element2;
-    }
-    if (element1->next != NULL) {
-      element1->next->previous = element2;
-    }
-
-    element1->previous = previous2;
-    element1->next = next2;
+    swap_far_elements(list, element1, element2);
   }
 }
 

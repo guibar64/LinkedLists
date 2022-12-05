@@ -78,6 +78,7 @@ void test_add() {
   CU_ASSERT(list.tail->value == -4);
   CU_ASSERT(list.head->next->value == 42);
   CU_ASSERT(list.head->next->previous == list.head);
+  CU_ASSERT(doubly_linked_list_length(&list) == 4)
 
   Element *not_added = doubly_linked_list_element_new(616);
   doubly_linked_list_add(&list, not_added, 10);

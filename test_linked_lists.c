@@ -272,8 +272,6 @@ void test_swap_on_head() {
   // 2 1 3
   CU_ASSERT(list.head == el2);
   CU_ASSERT(el2->next == el1);
-  printf("el1 = %zd  el2 = %zd, el1->next = %zd", el1 - el1, el2 - el1,
-         el1->next - el1);
   CU_ASSERT(el1->next == el3);
 
   linked_list_swap(&list, el1, el2);
